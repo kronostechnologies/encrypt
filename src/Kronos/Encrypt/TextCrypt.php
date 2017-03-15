@@ -23,9 +23,24 @@ class TextCrypt {
 	}
 
 	/**
-	 * @param $text
+	 * Encrypt plaintext using given cypher and provided key
+	 *
+	 * @param $plaintext
+	 * @return string
 	 */
-	public function encrypt($text) {
-		$this->provider->getKey();
+	public function encrypt($plaintext) {
+		$key = $this->provider->getKey();
+
+		return $this->cypher->encrypt($plaintext, $key);
+	}
+
+	/**
+	 * @param $cyphertext
+	 * @return string
+	 */
+	public function decrypt($cyphertext) {
+		$key = $this->provider->getKey();
+
+		return $this->cypher->decrypt($cyphertext, $key);
 	}
 }

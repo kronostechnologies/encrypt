@@ -11,7 +11,7 @@ verbose="true"
 >
 <testsuites>
 	<testsuite name="Kronos-Log">
-		<directory>./tests/Kronos/Tests/Enrypt</directory>
+		<directory>./tests/Kronos/Tests/Encrypt</directory>
 	</testsuite>
 </testsuites>
 

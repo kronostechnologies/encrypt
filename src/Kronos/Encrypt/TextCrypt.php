@@ -4,7 +4,7 @@ namespace Kronos\Encrypt;
 
 class TextCrypt {
 	/**
-	 * @var Cypher\Adaptor
+	 * @var Cipher\Adaptor
 	 */
 	private $cypher;
 
@@ -14,10 +14,10 @@ class TextCrypt {
 	private $provider;
 
 	/**
-	 * @param Cypher\Adaptor $cypher
+	 * @param Cipher\Adaptor $cypher
 	 * @param KeyProvider\Adaptor $provider
 	 */
-	public function __construct(Cypher\Adaptor $cypher, KeyProvider\Adaptor $provider) {
+	public function __construct(Cipher\Adaptor $cypher, KeyProvider\Adaptor $provider) {
 		$this->cypher = $cypher;
 		$this->provider = $provider;
 	}

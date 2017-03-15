@@ -1,14 +1,14 @@
 <?php
 
-namespace Kronos\Tests\Encrypt\Cypher;
+namespace Kronos\Tests\Encrypt\Cipher;
 
-use Kronos\Encrypt\Cypher\AES;
-use Kronos\Encrypt\Cypher\Factory;
+use Kronos\Encrypt\Cipher\AES;
+use Kronos\Encrypt\Cipher\Factory;
 
 class AESTest extends \PHPUnit_Framework_TestCase {
 	const PLAINTEXT = 'Plaintext';
 	const KEY = 'Key';
-	const CYPHERTEXT = 'Cyphertext';
+	const CIPHERTEXT = 'Ciphertext';
 
 	/**
 	 * @var \PHPUnit_Framework_MockObject_MockObject
@@ -72,14 +72,14 @@ class AESTest extends \PHPUnit_Framework_TestCase {
 		$this->aes_adaptor->encrypt(self::PLAINTEXT, self::KEY);
 	}
 
-	public function test_CryptAES_encrypt_ShouldReturnCyphertext() {
+	public function test_CryptAES_encrypt_ShouldReturnCiphertext() {
 		$this->crypt_aes
 			->method('encrypt')
-			->willReturn(self::CYPHERTEXT);
+			->willReturn(self::CIPHERTEXT);
 
-		$cyphertext = $this->aes_adaptor->encrypt(self::PLAINTEXT, self::KEY);
+		$Ciphertext = $this->aes_adaptor->encrypt(self::PLAINTEXT, self::KEY);
 
-		$this->assertEquals(self::CYPHERTEXT, $cyphertext);
+		$this->assertEquals(self::CIPHERTEXT, $Ciphertext);
 	}
 
 	// decrypt
@@ -89,7 +89,7 @@ class AESTest extends \PHPUnit_Framework_TestCase {
 			->expects(self::once())
 			->method('createCryptAES');
 
-		$this->aes_adaptor->decrypt(self::CYPHERTEXT, self::KEY);
+		$this->aes_adaptor->decrypt(self::CIPHERTEXT, self::KEY);
 	}
 
 	public function test_CryptAES_decrypt_ShouldSetKeyLengthTo256() {
@@ -98,7 +98,7 @@ class AESTest extends \PHPUnit_Framework_TestCase {
 			->method('setKeyLength')
 			->with(256);
 
-		$this->aes_adaptor->decrypt(self::CYPHERTEXT, self::KEY);
+		$this->aes_adaptor->decrypt(self::CIPHERTEXT, self::KEY);
 	}
 
 	public function test_CryptAES_decrypt_ShouldSetKey() {
@@ -107,25 +107,25 @@ class AESTest extends \PHPUnit_Framework_TestCase {
 			->method('setKey')
 			->with(self::KEY);
 
-		$this->aes_adaptor->decrypt(self::CYPHERTEXT, self::KEY);
+		$this->aes_adaptor->decrypt(self::CIPHERTEXT, self::KEY);
 	}
 
 	public function test_CryptAES_decrypt_ShouldEncryptPlaintext() {
 		$this->crypt_aes
 			->expects(self::once())
 			->method('decrypt')
-			->with(self::CYPHERTEXT);
+			->with(self::CIPHERTEXT);
 
-		$this->aes_adaptor->decrypt(self::CYPHERTEXT, self::KEY);
+		$this->aes_adaptor->decrypt(self::CIPHERTEXT, self::KEY);
 	}
 
-	public function test_CryptAES_decrypt_ShouldReturnCyphertext() {
+	public function test_CryptAES_decrypt_ShouldReturnCiphertext() {
 		$this->crypt_aes
 			->method('decrypt')
 			->willReturn(self::PLAINTEXT);
 
-		$cyphertext = $this->aes_adaptor->decrypt(self::CYPHERTEXT, self::KEY);
+		$Ciphertext = $this->aes_adaptor->decrypt(self::CIPHERTEXT, self::KEY);
 
-		$this->assertEquals(self::PLAINTEXT, $cyphertext);
+		$this->assertEquals(self::PLAINTEXT, $Ciphertext);
 	}
 }

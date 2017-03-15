@@ -1,6 +1,6 @@
 <?php
 
-namespace Kronos\Encrypt\Cypher;
+namespace Kronos\Encrypt\Cipher;
 
 class AES implements Adaptor {
 
@@ -20,7 +20,7 @@ class AES implements Adaptor {
 	 *
 	 * @param string $plaintext
 	 * @param string $key
-	 * @return string Cyphertext
+	 * @return string Ciphertext
 	 */
 	public function encrypt($plaintext, $key) {
 		$crypt_aes = $this->setupAES256($key);

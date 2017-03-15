@@ -1,6 +1,6 @@
 <?php
 
-namespace Kronos\Encrypt\Cypher;
+namespace Kronos\Encrypt\Cipher;
 
 class Factory {
 

@@ -2,6 +2,11 @@
     "name": "kronos/encrypt",
     "description": "Library to help text encryption/decryption",
     "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Kronos\\Encrypt\\": "src/Kronos/Encrypt"
+        }
+    },
     "require": {
         "aws/aws-sdk-php": "^3.24",
         "deployer/phpseclib": "^1.0"

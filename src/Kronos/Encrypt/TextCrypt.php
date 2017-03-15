@@ -6,7 +6,7 @@ class TextCrypt {
 	/**
 	 * @var Cipher\Adaptor
 	 */
-	private $cypher;
+	private $cipher;
 
 	/**
 	 * @var KeyProvider\Adaptor
@@ -14,11 +14,11 @@ class TextCrypt {
 	private $provider;
 
 	/**
-	 * @param Cipher\Adaptor $cypher
+	 * @param Cipher\Adaptor $cipher
 	 * @param KeyProvider\Adaptor $provider
 	 */
-	public function __construct(Cipher\Adaptor $cypher, KeyProvider\Adaptor $provider) {
-		$this->cypher = $cypher;
+	public function __construct(Cipher\Adaptor $cipher, KeyProvider\Adaptor $provider) {
+		$this->cipher = $cipher;
 		$this->provider = $provider;
 	}
 
@@ -31,7 +31,7 @@ class TextCrypt {
 	public function encrypt($plaintext) {
 		$key = $this->provider->getKey();
 
-		return $this->cypher->encrypt($plaintext, $key);
+		return $this->cipher->encrypt($plaintext, $key);
 	}
 
 	/**
@@ -41,6 +41,6 @@ class TextCrypt {
 	public function decrypt($cyphertext) {
 		$key = $this->provider->getKey();
 
-		return $this->cypher->decrypt($cyphertext, $key);
+		return $this->cipher->decrypt($cyphertext, $key);
 	}
 }

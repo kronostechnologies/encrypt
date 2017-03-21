@@ -10,13 +10,17 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	const CIPHERTEXT_BLOB = 'base64 data object';
 	const DECRYPTED_KEY = 'Decrypted key';
 
+	const CONTEXT_ARRAY = [
+		'key' => 'value'
+	];
+
 	/**
 	 * @var PHPUnit_Framework_MockObject_MockObject
 	 */
 	private $kms_client;
 
 	/**
-	 * @var KeyDescription
+	 * @var PHPUnit_Framework_MockObject_MockObject
 	 */
 	private $key_description;
 
@@ -28,20 +32,41 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$this->kms_client = $this->createPartialMock(KmsClient::class, ['decrypt']);
 
-		$this->key_description = new KeyDescription();
+		$this->key_description = $this->createMock(KeyDescription::class);
 		$this->key_description->ciphertextBlob = self::CIPHERTEXT_BLOB;
-		$this->key_description->context = ['somecontext' => 'value'];
 
 		$this->provider = new KMS($this->kms_client, $this->key_description);
 	}
 
-	public function test_getKey_ShouldDecryptKey() {
+	public function test_getKey_ShouldGetContextAsArray() {
+		$this->key_description
+			->expects(self::once())
+			->method('getContextAsArray');
+
+		$this->provider->getKey();
+	}
+
+	public function test_DecodedCiphertextBlob_getKey_ShouldDecryptKey() {
+		$this->kms_client
+			->expects(self::once())
+			->method('decrypt')
+			->with([
+				'CiphertextBlob' => $this->key_description->ciphertextBlob
+			]);
+
+		$this->provider->getKey();
+	}
+
+	public function test_EncryptionContext_getKey_ShouldDecryptKeyWithContextArray() {
+		$this->key_description
+			->method('getContextAsArray')
+			->willReturn(self::CONTEXT_ARRAY);
 		$this->kms_client
 			->expects(self::once())
 			->method('decrypt')
 			->with([
 				'CiphertextBlob' => $this->key_description->ciphertextBlob,
-				//'EncryptionContext' => $this->key_description->context
+				'EncryptionContext' => self::CONTEXT_ARRAY
 			]);
 
 		$this->provider->getKey();

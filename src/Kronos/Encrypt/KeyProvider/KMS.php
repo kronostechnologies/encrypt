@@ -2,7 +2,9 @@
 
 namespace Kronos\Encrypt\KeyProvider;
 
+use Aws\Kms\Exception\KmsException;
 use Aws\Kms\KmsClient;
+use Kronos\Encrypt\KeyProvider\Exception\FetchException;
 use Kronos\Encrypt\KeyProvider\KMS\KeyDescription;
 
 class KMS implements Adaptor {
@@ -39,7 +41,12 @@ class KMS implements Adaptor {
 				$options['EncryptionContext'] = $context;
 			}
 
-			$response = $this->client->decrypt($options);
+			try {
+				$response = $this->client->decrypt($options);
+			}
+			catch(KmsException $e) {
+				throw new FetchException('Key decryption failed', 0, $e);
+			}
 
 			$this->decrypted_key = $response['Plaintext'];
 		}

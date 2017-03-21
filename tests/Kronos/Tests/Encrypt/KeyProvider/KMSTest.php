@@ -2,7 +2,9 @@
 
 namespace Kronos\Tests\Encrypt\KeyProvider;
 
+use Aws\Command;
 use Aws\Kms\KmsClient;
+use Kronos\Encrypt\KeyProvider\Exception\FetchException;
 use Kronos\Encrypt\KeyProvider\KMS;
 use Kronos\Encrypt\KeyProvider\KMS\KeyDescription;
 
@@ -92,5 +94,14 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 		$key = $this->provider->getKey();
 
 		$this->assertEquals(self::DECRYPTED_KEY, $key);
+	}
+
+	public function test_InvalidKey_getKey_ShouldThrowException() {
+		$this->kms_client
+			->method('decrypt')
+			->will($this->throwException(new \Aws\Kms\Exception\KmsException('message', new Command('name'))));
+		$this->expectException(FetchException::class);
+
+		$this->provider->getKey();
 	}
 }

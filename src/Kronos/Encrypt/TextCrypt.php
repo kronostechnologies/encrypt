@@ -9,15 +9,15 @@ class TextCrypt {
 	private $cipher;
 
 	/**
-	 * @var KeyProvider\Adaptor
+	 * @var Key\Provider\Adaptor
 	 */
 	private $provider;
 
 	/**
 	 * @param Cipher\Adaptor $cipher
-	 * @param KeyProvider\Adaptor $provider
+	 * @param Key\Provider\Adaptor $provider
 	 */
-	public function __construct(Cipher\Adaptor $cipher, KeyProvider\Adaptor $provider) {
+	public function __construct(Cipher\Adaptor $cipher, Key\Provider\Adaptor $provider) {
 		$this->cipher = $cipher;
 		$this->provider = $provider;
 	}

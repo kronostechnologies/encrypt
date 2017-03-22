@@ -1,10 +1,10 @@
 <?php
 
-namespace Kronos\Tests\Encrypt\KeyProvider\KMS;
+namespace Kronos\Tests\Encrypt\Key\KMS;
 
 
-use Kronos\Encrypt\KeyProvider\KMS\EncryptionContext;
-use Kronos\Encrypt\KeyProvider\KMS\KeyDescription;
+use Kronos\Encrypt\Key\KMS\EncryptionContext;
+use Kronos\Encrypt\Key\KMS\KeyDescription;
 
 class KeyDescriptionTest extends \PHPUnit_Framework_TestCase {
 	const VALUE = 'value';

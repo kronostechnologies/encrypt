@@ -1,6 +1,6 @@
 <?php
 
-namespace Kronos\Encrypt\KeyProvider\KMS;
+namespace Kronos\Encrypt\Key\KMS;
 
 class EncryptionContext {
 

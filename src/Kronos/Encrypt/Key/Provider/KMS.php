@@ -1,11 +1,11 @@
 <?php
 
-namespace Kronos\Encrypt\KeyProvider;
+namespace Kronos\Encrypt\Key\Provider;
 
 use Aws\Kms\Exception\KmsException;
 use Aws\Kms\KmsClient;
-use Kronos\Encrypt\KeyProvider\Exception\FetchException;
-use Kronos\Encrypt\KeyProvider\KMS\KeyDescription;
+use Kronos\Encrypt\Key\Exception\FetchException;
+use Kronos\Encrypt\Key\KMS\KeyDescription;
 
 class KMS implements Adaptor {
 
@@ -30,6 +30,11 @@ class KMS implements Adaptor {
 		$this->key_description = $key_description;
 	}
 
+	/**
+	 * Return KMS decrypted key
+	 * @return string
+	 * @throws FetchException
+	 */
 	public function getKey() {
 		if(!$this->decrypted_key) {
 			$options = [

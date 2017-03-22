@@ -1,6 +1,6 @@
 <?php
 
-namespace Kronos\Encrypt\KeyProvider\Exception;
+namespace Kronos\Encrypt\Key\Exception;
 
 class FetchException extends \Exception {
 

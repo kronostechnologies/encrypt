@@ -1,6 +1,6 @@
 <?php
 
-namespace Kronos\Encrypt\KeyProvider;
+namespace Kronos\Encrypt\Key\Provider;
 
 interface Adaptor {
 

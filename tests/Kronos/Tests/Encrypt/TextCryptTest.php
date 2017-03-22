@@ -4,7 +4,7 @@ namespace Kronos\Tests\Encrypt;
 
 use \Kronos\Encrypt\TextCrypt,
 	\Kronos\Encrypt\Cipher\Adaptor as Cipher,
-	\Kronos\Encrypt\KeyProvider\Adaptor as KeyProvider;
+	\Kronos\Encrypt\Key\Provider\Adaptor as KeyProvider;
 
 class TextCryptTest extends \PHPUnit_Framework_TestCase {
 	const PLAINTEXT = 'Plaintext string';

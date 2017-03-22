@@ -1,12 +1,12 @@
 <?php
 
-namespace Kronos\Tests\Encrypt\KeyProvider;
+namespace Kronos\Tests\Encrypt\Key\Provider;
 
 use Aws\Command;
 use Aws\Kms\KmsClient;
-use Kronos\Encrypt\KeyProvider\Exception\FetchException;
-use Kronos\Encrypt\KeyProvider\KMS;
-use Kronos\Encrypt\KeyProvider\KMS\KeyDescription;
+use Kronos\Encrypt\Key\Exception\FetchException;
+use Kronos\Encrypt\Key\Provider\KMS;
+use Kronos\Encrypt\Key\KMS\KeyDescription;
 
 class KMSTest extends \PHPUnit_Framework_TestCase {
 	const CIPHERTEXT_BLOB = 'base64 data object';

@@ -25,17 +25,17 @@ class KeyDescription {
 	}
 
 	/**
-	 * @param EncryptionContext $context
-	 */
-	public function setEncryptionContext($context) {
-		$this->context = $context;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getCiphertextBlob() {
 		return $this->ciphertextBlob;
+	}
+
+	/**
+	 * @param EncryptionContext $context
+	 */
+	public function setEncryptionContext(EncryptionContext $context) {
+		$this->context = $context;
 	}
 
 	/**

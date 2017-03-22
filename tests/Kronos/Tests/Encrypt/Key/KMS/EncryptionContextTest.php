@@ -5,8 +5,10 @@ namespace Kronos\Tests\Encrypt\Key\KMS;
 use Kronos\Encrypt\Key\KMS\EncryptionContext;
 
 class EncryptionContextTest extends \PHPUnit_Framework_TestCase {
-	const KEY = 'key';
+	const FIELD = 'field';
+	const EMTPY_FIELD = '';
 	const VALUE = 'value';
+	const ANOTHER_VALUE = 'other value';
 
 	/**
 	 * @var EncryptionContext
@@ -17,34 +19,29 @@ class EncryptionContextTest extends \PHPUnit_Framework_TestCase {
 		$this->context = new EncryptionContext();
 	}
 
-	public function test_KeyAndValue_isValid_ShouldReturnTrue() {
-		$this->context->key = self::KEY;
-		$this->context->value = self::VALUE;
+	public function test_AddedContext_toArray_ShouldReturnArrayContainingAddedContext() {
+		$this->context->addField(self::FIELD, self::VALUE);
 
-		$valid = $this->context->isValid();
+		$array = $this->context->toArray();
 
-		$this->assertTrue($valid);
+		$this->assertEquals([self::FIELD => self::VALUE], $array);
 	}
 
-	public function test_OnlyKey_isValid_ShouldReturnFalse() {
-		$this->context->key = self::KEY;
+	public function test_AddedContextWithEmptyField_toArray_ShouldReturnArrayExcludingEmptyField() {
+		$this->context->addField(self::FIELD, self::VALUE);
+		$this->context->addField(self::EMTPY_FIELD, self::VALUE);
 
-		$valid = $this->context->isValid();
+		$array = $this->context->toArray();
 
-		$this->assertFalse($valid);
+		$this->assertEquals([self::FIELD => self::VALUE], $array);
 	}
 
-	public function test_OnlyValue_isValid_ShouldReturnFalse() {
-		$this->context->value = self::VALUE;
+	public function test_AddingTwiceTheSameField_toArray_ShouldReturnArrayWithLastGivenFieldValue() {
+		$this->context->addField(self::FIELD, self::VALUE);
+		$this->context->addField(self::FIELD, self::ANOTHER_VALUE);
 
-		$valid = $this->context->isValid();
+		$array = $this->context->toArray();
 
-		$this->assertFalse($valid);
-	}
-
-	public function test_NoKeyOrValue_isValid_ShouldReturnFalse() {
-		$valid = $this->context->isValid();
-
-		$this->assertFalse($valid);
+		$this->assertEquals([self::FIELD => self::ANOTHER_VALUE], $array);
 	}
 }

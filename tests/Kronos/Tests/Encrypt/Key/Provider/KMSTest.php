@@ -35,39 +35,48 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 		$this->kms_client = $this->createPartialMock(KmsClient::class, ['decrypt']);
 
 		$this->key_description = $this->createMock(KeyDescription::class);
-		$this->key_description->ciphertextBlob = self::CIPHERTEXT_BLOB;
 
 		$this->provider = new KMS($this->kms_client, $this->key_description);
+	}
+
+	public function test_getKey_ShouldGetCiphertextBlob() {
+		$this->key_description
+			->expects(self::once())
+			->method('getCiphertextBlob');
+
+		$this->provider->getKey();
 	}
 
 	public function test_getKey_ShouldGetContextAsArray() {
 		$this->key_description
 			->expects(self::once())
-			->method('getContextAsArray');
+			->method('getEncryptionContextAsArray');
 
 		$this->provider->getKey();
 	}
 
 	public function test_DecodedCiphertextBlob_getKey_ShouldDecryptKey() {
+		$this->givenCiphertextBlob();
 		$this->kms_client
 			->expects(self::once())
 			->method('decrypt')
 			->with([
-				'CiphertextBlob' => $this->key_description->ciphertextBlob
+				'CiphertextBlob' => self::CIPHERTEXT_BLOB
 			]);
 
 		$this->provider->getKey();
 	}
 
 	public function test_EncryptionContext_getKey_ShouldDecryptKeyWithContextArray() {
+		$this->givenCiphertextBlob();
 		$this->key_description
-			->method('getContextAsArray')
+			->method('getEncryptionContextAsArray')
 			->willReturn(self::CONTEXT_ARRAY);
 		$this->kms_client
 			->expects(self::once())
 			->method('decrypt')
 			->with([
-				'CiphertextBlob' => $this->key_description->ciphertextBlob,
+				'CiphertextBlob' => self::CIPHERTEXT_BLOB,
 				'EncryptionContext' => self::CONTEXT_ARRAY
 			]);
 
@@ -75,6 +84,7 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_DecryptedKey_getKey_ShouldReturnDecryptedKey() {
+		$this->givenCiphertextBlob();
 		$this->kms_client
 			->method('decrypt')
 			->willReturn(['Plaintext' => self::DECRYPTED_KEY]);
@@ -103,5 +113,11 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 		$this->expectException(FetchException::class);
 
 		$this->provider->getKey();
+	}
+
+	private function givenCiphertextBlob() {
+		$this->key_description
+			->method('getCiphertextBlob')
+			->willReturn(self::CIPHERTEXT_BLOB);
 	}
 }

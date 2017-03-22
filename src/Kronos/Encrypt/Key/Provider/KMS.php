@@ -38,10 +38,10 @@ class KMS implements Adaptor {
 	public function getKey() {
 		if(!$this->decrypted_key) {
 			$options = [
-				'CiphertextBlob' => $this->key_description->ciphertextBlob
+				'CiphertextBlob' => $this->key_description->getCiphertextBlob()
 			];
 
-			$context = $this->key_description->getContextAsArray();
+			$context = $this->key_description->getEncryptionContextAsArray();
 			if(!empty($context)) {
 				$options['EncryptionContext'] = $context;
 			}
@@ -58,5 +58,4 @@ class KMS implements Adaptor {
 
 		return $this->decrypted_key;
 	}
-
 }

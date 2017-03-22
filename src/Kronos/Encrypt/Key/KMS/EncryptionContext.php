@@ -4,17 +4,22 @@ namespace Kronos\Encrypt\Key\KMS;
 
 class EncryptionContext {
 
-	/**
-	 * @var string
-	 */
-	public $key = '';
+	private $context = [];
 
 	/**
-	 * @var string
+	 * @param $field string Name of the field to add
+	 * @param $value string Value of the field to add
 	 */
-	public $value = '';
+	public function addField($field, $value) {
+		if($field) {
+			$this->context[$field] = $value;
+		}
+	}
 
-	public function isValid() {
-		return $this->key && $this->value;
+	/**
+	 * @return array
+	 */
+	public function toArray() {
+		return $this->context;
 	}
 }

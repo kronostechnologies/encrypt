@@ -8,36 +8,53 @@ class KeyDescription {
 	 * CiphertextBlob returned by KMS GenerateDataKey
 	 * @var string
 	 */
-	public $ciphertextBlob;
+	private $ciphertextBlob;
 
 	/**
 	 * Encryption context to send along the decryption of the ciphertextblob
-	 * @var EncryptionContext[]
+	 * @var EncryptionContext
 	 */
-	public $context = [];
+	private $context = null;
 
 	/**
-	 * @param $context array
+	 * KeyDescription constructor.
+	 * @param string $ciphertextBlob
 	 */
-	public function buildContextFromArray($context) {
-		foreach($context as $key => $value) {
-			$encryption_context = new EncryptionContext();
-			$encryption_context->key = $key;
-			$encryption_context->value = $value;
-
-			$this->context[] = $encryption_context;
-		}
+	public function __construct($ciphertextBlob) {
+		$this->ciphertextBlob = $ciphertextBlob;
 	}
 
-	public function getContextAsArray() {
-		$array = [];
+	/**
+	 * @param EncryptionContext $context
+	 */
+	public function setEncryptionContext($context) {
+		$this->context = $context;
+	}
 
-		foreach($this->context as $encryption_context) {
-			if($encryption_context->isValid()) {
-				$array[$encryption_context->key] = $encryption_context->value;
-			}
+	/**
+	 * @return string
+	 */
+	public function getCiphertextBlob() {
+		return $this->ciphertextBlob;
+	}
+
+	/**
+	 * @return EncryptionContext
+	 */
+	public function getEncryptionContext() {
+		return $this->context;
+	}
+
+	/**
+	 * Return encryption context as an array
+	 * @return array
+	 */
+	public function getEncryptionContextAsArray() {
+		if($this->context) {
+			return $this->context->toArray();
 		}
-
-		return $array;
+		else {
+			return [];
+		}
 	}
 }

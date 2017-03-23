@@ -2,7 +2,7 @@
 
 namespace Kronos\Encrypt;
 
-class TextCrypt {
+class Encrypt {
 	/**
 	 * @var Cipher\Adaptor
 	 */

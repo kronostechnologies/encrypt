@@ -2,19 +2,19 @@
 
 namespace Kronos\Tests\Encrypt;
 
-use \Kronos\Encrypt\TextCrypt,
+use Kronos\Encrypt\Encrypt,
 	\Kronos\Encrypt\Cipher\Adaptor as Cipher,
 	\Kronos\Encrypt\Key\Provider\Adaptor as KeyProvider;
 
-class TextCryptTest extends \PHPUnit_Framework_TestCase {
+class EncryptTest extends \PHPUnit_Framework_TestCase {
 	const PLAINTEXT = 'Plaintext string';
 	const KEY = 'Cipher key';
 	const CYPHERTEXT = 'Ciphertext';
 
 	/**
-	 * @var TextCrypt
+	 * @var Encrypt
 	 */
-	private $textcrypt;
+	private $encrypt;
 
 	/**
 	 * @var \PHPUnit_Framework_MockObject_MockObject
@@ -30,7 +30,7 @@ class TextCryptTest extends \PHPUnit_Framework_TestCase {
 		$this->cipher = $this->createMock(Cipher::class);
 		$this->provider = $this->createMock(KeyProvider::class);
 
-		$this->textcrypt = new TextCrypt($this->cipher, $this->provider);
+		$this->encrypt = new Encrypt($this->cipher, $this->provider);
 	}
 
 	// encrypt
@@ -40,7 +40,7 @@ class TextCryptTest extends \PHPUnit_Framework_TestCase {
 			->expects(self::once())
 			->method('getKey');
 
-		$this->textcrypt->encrypt(self::PLAINTEXT);
+		$this->encrypt->encrypt(self::PLAINTEXT);
 	}
 
 	public function test_Key_encrypt_ShouldEncryptPlaintextWithKey() {
@@ -50,14 +50,14 @@ class TextCryptTest extends \PHPUnit_Framework_TestCase {
 			->method('encrypt')
 			->with(self::PLAINTEXT, self::KEY);
 
-		$this->textcrypt->encrypt(self::PLAINTEXT);
+		$this->encrypt->encrypt(self::PLAINTEXT);
 	}
 
 	public function test_EncryptedPlaintext_encrypt_ShouldReturnCiphertext() {
 		$this->givenKey();
 		$this->givenCipherEncryptedPlaintext();
 
-		$cyphertext = $this->textcrypt->encrypt(self::PLAINTEXT);
+		$cyphertext = $this->encrypt->encrypt(self::PLAINTEXT);
 
 		$this->assertEquals(self::CYPHERTEXT, $cyphertext);
 	}
@@ -69,7 +69,7 @@ class TextCryptTest extends \PHPUnit_Framework_TestCase {
 			->expects(self::once())
 			->method('getKey');
 
-		$this->textcrypt->decrypt(self::PLAINTEXT);
+		$this->encrypt->decrypt(self::PLAINTEXT);
 	}
 
 	public function test_Key_decrypt_ShouldDecryptCipherWithKey() {
@@ -79,14 +79,14 @@ class TextCryptTest extends \PHPUnit_Framework_TestCase {
 			->method('decrypt')
 			->with(self::CYPHERTEXT, self::KEY);
 
-		$this->textcrypt->decrypt(self::CYPHERTEXT);
+		$this->encrypt->decrypt(self::CYPHERTEXT);
 	}
 
 	public function test_DecryptedCiphertext_decrypt_ShouldReturnPlaintext() {
 		$this->givenKey();
 		$this->givenCipherDecryptedCiphertext();
 
-		$cyphertext = $this->textcrypt->decrypt(self::CYPHERTEXT);
+		$cyphertext = $this->encrypt->decrypt(self::CYPHERTEXT);
 
 		$this->assertEquals(self::PLAINTEXT, $cyphertext);
 	}

@@ -37,8 +37,14 @@ class KMS implements Adaptor {
 	 */
 	public function getKey() {
 		if(!$this->decrypted_key) {
+
+			$decoded_ciphertextblob = base64_decode($this->key_description->getCiphertextBlob(), true);
+			if(!$decoded_ciphertextblob) {
+				throw new FetchException('CiphertextBlob should be a valid base64 encoded string');
+			}
+
 			$options = [
-				'CiphertextBlob' => $this->key_description->getCiphertextBlob()
+				'CiphertextBlob' => $decoded_ciphertextblob
 			];
 
 			$context = $this->key_description->getEncryptionContextAsArray();

@@ -44,7 +44,7 @@ class KMS {
 			throw new GenerateException('Could not generate KMS key', 0, $e);
 		}
 
-		$key = new KeyDescription($response['CiphertextBlob']);
+		$key = new KeyDescription(base64_encode($response['CiphertextBlob']));
 		if($context) {
 			$key->setEncryptionContext($context);
 		}

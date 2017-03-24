@@ -9,8 +9,9 @@ use Kronos\Encrypt\Key\Provider\KMS;
 use Kronos\Encrypt\Key\KMS\KeyDescription;
 
 class KMSTest extends \PHPUnit_Framework_TestCase {
-	const CIPHERTEXT_BLOB = 'base64 data object';
+	const CIPHERTEXT_BLOB = 'random binary string';
 	const DECRYPTED_KEY = 'Decrypted key';
+	const INVALID_BASE64 = '=InvalidBase64';
 
 	const CONTEXT_ARRAY = [
 		'key' => 'value'
@@ -42,12 +43,14 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	public function test_getKey_ShouldGetCiphertextBlob() {
 		$this->key_description
 			->expects(self::once())
-			->method('getCiphertextBlob');
+			->method('getCiphertextBlob')
+			->willReturn(base64_encode(self::CIPHERTEXT_BLOB));
 
 		$this->provider->getKey();
 	}
 
-	public function test_getKey_ShouldGetContextAsArray() {
+	public function test_CiphertextBlob_getKey_ShouldGetContextAsArray() {
+		$this->givenCiphertextBlob();
 		$this->key_description
 			->expects(self::once())
 			->method('getEncryptionContextAsArray');
@@ -95,6 +98,7 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_AlreadyDecryptedKey_getKey_ShouldNotDecryptKeyTwiceAndReturnDecryptedKey() {
+		$this->givenCiphertextBlob();
 		$this->kms_client
 			->expects(self::once())
 			->method('decrypt')
@@ -104,6 +108,13 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 		$key = $this->provider->getKey();
 
 		$this->assertEquals(self::DECRYPTED_KEY, $key);
+	}
+
+	public function test_NonBase64EncodedCiphertextBlob_getKey_ShouldThrowException() {
+		$this->givenInvalidBase64CiphertextBlob();
+		$this->expectException(FetchException::class);
+
+		$this->provider->getKey();
 	}
 
 	public function test_InvalidKey_getKey_ShouldThrowException() {
@@ -118,6 +129,13 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	private function givenCiphertextBlob() {
 		$this->key_description
 			->method('getCiphertextBlob')
-			->willReturn(self::CIPHERTEXT_BLOB);
+			->willReturn(base64_encode(self::CIPHERTEXT_BLOB));
 	}
+
+	private function givenInvalidBase64CiphertextBlob() {
+		$this->key_description
+			->method('getCiphertextBlob')
+			->willReturn(self::INVALID_BASE64);
+	}
+
 }

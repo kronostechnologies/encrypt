@@ -50,7 +50,7 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 		$key = $this->generator->generateKey(self::KEY_ID);
 
 		$this->assertInstanceOf(KeyDescription::class, $key);
-		$this->assertEquals(self::CIPHERTEXT_BLOB, $key->getCiphertextBlob());
+		$this->assertEquals(base64_encode(self::CIPHERTEXT_BLOB), $key->getCiphertextBlob());
 	}
 
 	public function test_EncryptionContext_generateKey_ShouldGetAsArray() {

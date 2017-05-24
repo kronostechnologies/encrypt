@@ -75,4 +75,13 @@ class Factory {
 	public function createKMSEncryptionContext() {
 		return new Key\KMS\EncryptionContext();
 	}
+
+	/**
+	 * @param Cipher\Adaptor $cipher
+	 * @param Key\Provider\Adaptor $provider
+	 * @return Encrypt
+	 */
+	public function createEncrypt(Cipher\Adaptor $cipher, Key\Provider\Adaptor $provider) {
+		return new Encrypt($cipher, $provider);
+	}
 }

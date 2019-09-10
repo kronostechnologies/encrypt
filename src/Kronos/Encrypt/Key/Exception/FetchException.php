@@ -2,6 +2,7 @@
 
 namespace Kronos\Encrypt\Key\Exception;
 
-class FetchException extends \Exception {
+class FetchException extends \Exception
+{
 
 }

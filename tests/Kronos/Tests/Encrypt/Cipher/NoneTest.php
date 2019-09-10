@@ -5,34 +5,38 @@ namespace Kronos\Tests\Encrypt\Cipher;
 use Kronos\Encrypt\Cipher\None;
 use PHPUnit\Framework\TestCase;
 
-class NoneTest extends TestCase {
+class NoneTest extends TestCase
+{
 
-	const PLAINTEXT = 'plaintext';
-	const CIPHERTEXT = 'ciphertext';
-	const KEY = 'key';
+    const PLAINTEXT = 'plaintext';
+    const CIPHERTEXT = 'ciphertext';
+    const KEY = 'key';
 
-	/**
-	 * @var None
-	 */
-	private $cipher;
+    /**
+     * @var None
+     */
+    private $cipher;
 
-	public function setUp(): void {
-		$this->cipher = new None();
-	}
+    public function setUp(): void
+    {
+        $this->cipher = new None();
+    }
 
-	public function test_encrypt_ShouldReturnPlainbtext() {
-		$plaintext = self::PLAINTEXT;
+    public function test_encrypt_ShouldReturnPlainbtext()
+    {
+        $plaintext = self::PLAINTEXT;
 
-		$ciphertext = $this->cipher->encrypt($plaintext, self::KEY);
+        $ciphertext = $this->cipher->encrypt($plaintext, self::KEY);
 
-		$this->assertEquals($plaintext, $ciphertext);
-	}
+        $this->assertEquals($plaintext, $ciphertext);
+    }
 
-	public function test_decrypt_ShouldReturnCiphertext() {
-		$ciphertext = self::CIPHERTEXT;
+    public function test_decrypt_ShouldReturnCiphertext()
+    {
+        $ciphertext = self::CIPHERTEXT;
 
-		$plaintext= $this->cipher->decrypt($ciphertext, self::KEY);
+        $plaintext = $this->cipher->decrypt($ciphertext, self::KEY);
 
-		$this->assertEquals($ciphertext, $plaintext);
-	}
+        $this->assertEquals($ciphertext, $plaintext);
+    }
 }

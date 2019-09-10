@@ -2,6 +2,7 @@
 
 namespace Kronos\Encrypt\Key\Exception;
 
-class GenerateException extends \Exception {
+class GenerateException extends \Exception
+{
 
 }

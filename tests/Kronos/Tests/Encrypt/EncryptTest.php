@@ -7,108 +7,119 @@ use Kronos\Encrypt\Cipher\Adaptor as Cipher;
 use Kronos\Encrypt\Key\Provider\Adaptor as KeyProvider;
 use PHPUnit\Framework\TestCase;
 
-class EncryptTest extends TestCase {
-	const PLAINTEXT = 'Plaintext string';
-	const KEY = 'Cipher key';
-	const CYPHERTEXT = 'Ciphertext';
+class EncryptTest extends TestCase
+{
+    const PLAINTEXT = 'Plaintext string';
+    const KEY = 'Cipher key';
+    const CYPHERTEXT = 'Ciphertext';
 
-	/**
-	 * @var Encrypt
-	 */
-	private $encrypt;
+    /**
+     * @var Encrypt
+     */
+    private $encrypt;
 
-	/**
-	 * @var \PHPUnit_Framework_MockObject_MockObject
-	 */
-	private $provider;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $provider;
 
-	/**
-	 * @var \PHPUnit_Framework_MockObject_MockObject
-	 */
-	private $cipher;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $cipher;
 
-	public function setUp(): void {
-		$this->cipher = $this->createMock(Cipher::class);
-		$this->provider = $this->createMock(KeyProvider::class);
+    public function setUp(): void
+    {
+        $this->cipher = $this->createMock(Cipher::class);
+        $this->provider = $this->createMock(KeyProvider::class);
 
-		$this->encrypt = new Encrypt($this->cipher, $this->provider);
-	}
+        $this->encrypt = new Encrypt($this->cipher, $this->provider);
+    }
 
-	// encrypt
+    // encrypt
 
-	public function test_encrypt_ShouldGetCipherKey() {
-		$this->provider
-			->expects(self::once())
-			->method('getKey');
+    public function test_encrypt_ShouldGetCipherKey()
+    {
+        $this->provider
+            ->expects(self::once())
+            ->method('getKey');
 
-		$this->encrypt->encrypt(self::PLAINTEXT);
-	}
+        $this->encrypt->encrypt(self::PLAINTEXT);
+    }
 
-	public function test_Key_encrypt_ShouldEncryptPlaintextWithKey() {
-		$this->givenKey();
-		$this->cipher
-			->expects(self::once())
-			->method('encrypt')
-			->with(self::PLAINTEXT, self::KEY);
+    public function test_Key_encrypt_ShouldEncryptPlaintextWithKey()
+    {
+        $this->givenKey();
+        $this->cipher
+            ->expects(self::once())
+            ->method('encrypt')
+            ->with(self::PLAINTEXT, self::KEY);
 
-		$this->encrypt->encrypt(self::PLAINTEXT);
-	}
+        $this->encrypt->encrypt(self::PLAINTEXT);
+    }
 
-	public function test_EncryptedPlaintext_encrypt_ShouldReturnCiphertext() {
-		$this->givenKey();
-		$this->givenCipherEncryptedPlaintext();
+    public function test_EncryptedPlaintext_encrypt_ShouldReturnCiphertext()
+    {
+        $this->givenKey();
+        $this->givenCipherEncryptedPlaintext();
 
-		$cyphertext = $this->encrypt->encrypt(self::PLAINTEXT);
+        $cyphertext = $this->encrypt->encrypt(self::PLAINTEXT);
 
-		$this->assertEquals(self::CYPHERTEXT, $cyphertext);
-	}
+        $this->assertEquals(self::CYPHERTEXT, $cyphertext);
+    }
 
-	// decrypt
+    // decrypt
 
-	public function test_decrypt_ShouldGetCipherKey() {
-		$this->provider
-			->expects(self::once())
-			->method('getKey');
+    public function test_decrypt_ShouldGetCipherKey()
+    {
+        $this->provider
+            ->expects(self::once())
+            ->method('getKey');
 
-		$this->encrypt->decrypt(self::PLAINTEXT);
-	}
+        $this->encrypt->decrypt(self::PLAINTEXT);
+    }
 
-	public function test_Key_decrypt_ShouldDecryptCipherWithKey() {
-		$this->givenKey();
-		$this->cipher
-			->expects(self::once())
-			->method('decrypt')
-			->with(self::CYPHERTEXT, self::KEY);
+    public function test_Key_decrypt_ShouldDecryptCipherWithKey()
+    {
+        $this->givenKey();
+        $this->cipher
+            ->expects(self::once())
+            ->method('decrypt')
+            ->with(self::CYPHERTEXT, self::KEY);
 
-		$this->encrypt->decrypt(self::CYPHERTEXT);
-	}
+        $this->encrypt->decrypt(self::CYPHERTEXT);
+    }
 
-	public function test_DecryptedCiphertext_decrypt_ShouldReturnPlaintext() {
-		$this->givenKey();
-		$this->givenCipherDecryptedCiphertext();
+    public function test_DecryptedCiphertext_decrypt_ShouldReturnPlaintext()
+    {
+        $this->givenKey();
+        $this->givenCipherDecryptedCiphertext();
 
-		$cyphertext = $this->encrypt->decrypt(self::CYPHERTEXT);
+        $cyphertext = $this->encrypt->decrypt(self::CYPHERTEXT);
 
-		$this->assertEquals(self::PLAINTEXT, $cyphertext);
-	}
+        $this->assertEquals(self::PLAINTEXT, $cyphertext);
+    }
 
-	// utility functions
+    // utility functions
 
-	private function givenKey() {
-		$this->provider
-			->method('getKey')
-			->willReturn(self::KEY);
-	}
+    private function givenKey()
+    {
+        $this->provider
+            ->method('getKey')
+            ->willReturn(self::KEY);
+    }
 
-	private function givenCipherEncryptedPlaintext() {
-		$this->cipher
-			->method('encrypt')
-			->willReturn(self::CYPHERTEXT);
-	}
+    private function givenCipherEncryptedPlaintext()
+    {
+        $this->cipher
+            ->method('encrypt')
+            ->willReturn(self::CYPHERTEXT);
+    }
 
-	private function givenCipherDecryptedCiphertext() {
-		$this->cipher
-			->method('decrypt')
-			->willReturn(self::PLAINTEXT);
-	}
+    private function givenCipherDecryptedCiphertext()
+    {
+        $this->cipher
+            ->method('decrypt')
+            ->willReturn(self::PLAINTEXT);
+    }
 }

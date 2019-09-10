@@ -2,12 +2,13 @@
 
 namespace Kronos\Encrypt\Key\Provider;
 
-interface Adaptor {
+interface Adaptor
+{
 
-	/**
-	 * Return encryption/decryption key
-	 *
-	 * @return string
-	 */
-	public function getKey();
+    /**
+     * Return encryption/decryption key
+     *
+     * @return string
+     */
+    public function getKey();
 }

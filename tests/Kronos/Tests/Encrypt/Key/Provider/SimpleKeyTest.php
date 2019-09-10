@@ -2,10 +2,10 @@
 
 namespace Kronos\Tests\Encrypt\Key\Provider;
 
-
 use Kronos\Encrypt\Key\Provider\SimpleKey;
+use PHPUnit\Framework\TestCase;
 
-class SimpleKeyTest extends \PHPUnit_Framework_TestCase {
+class SimpleKeyTest extends TestCase {
 	const KEY = 'key';
 
 	public function test_getKey_ShouldReturnGivenKey() {

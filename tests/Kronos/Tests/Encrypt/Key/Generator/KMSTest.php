@@ -7,8 +7,9 @@ use Kronos\Encrypt\Key\Generator\KMS;
 use Aws\Kms\KmsClient;
 use Kronos\Encrypt\Key\KMS\EncryptionContext;
 use Kronos\Encrypt\Key\KMS\KeyDescription;
+use PHPUnit\Framework\TestCase;
 
-class KMSTest extends \PHPUnit_Framework_TestCase {
+class KMSTest extends TestCase {
 
 	const KEY_ID = 'key id';
 	const CIPHERTEXT_BLOB = 'binary string';
@@ -26,7 +27,7 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $kms_client;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->kms_client = $this->createPartialMock(KmsClient::class, ['generateDataKeyWithoutPlaintext']);
 
 		$this->generator = new KMS($this->kms_client);

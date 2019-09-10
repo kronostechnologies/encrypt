@@ -4,8 +4,9 @@ namespace Kronos\Tests\Encrypt\Cipher;
 
 use Kronos\Encrypt\Cipher\AES;
 use Kronos\Encrypt\Cipher\Factory;
+use PHPUnit\Framework\TestCase;
 
-class AESTest extends \PHPUnit_Framework_TestCase {
+class AESTest extends TestCase {
 	const PLAINTEXT = 'Plaintext';
 	const KEY = 'Key';
 	const CIPHERTEXT = 'Ciphertext';
@@ -25,7 +26,7 @@ class AESTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $aes_adaptor;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->crypt_aes = $this->createMock(\phpseclib\Crypt\AES::class);
 		$this->factory = $this->createMock(Factory::class);
 		$this->factory

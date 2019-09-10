@@ -2,11 +2,12 @@
 
 namespace Kronos\Tests\Encrypt;
 
-use Kronos\Encrypt\Encrypt,
-	\Kronos\Encrypt\Cipher\Adaptor as Cipher,
-	\Kronos\Encrypt\Key\Provider\Adaptor as KeyProvider;
+use Kronos\Encrypt\Encrypt;
+use Kronos\Encrypt\Cipher\Adaptor as Cipher;
+use Kronos\Encrypt\Key\Provider\Adaptor as KeyProvider;
+use PHPUnit\Framework\TestCase;
 
-class EncryptTest extends \PHPUnit_Framework_TestCase {
+class EncryptTest extends TestCase {
 	const PLAINTEXT = 'Plaintext string';
 	const KEY = 'Cipher key';
 	const CYPHERTEXT = 'Ciphertext';
@@ -26,7 +27,7 @@ class EncryptTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $cipher;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->cipher = $this->createMock(Cipher::class);
 		$this->provider = $this->createMock(KeyProvider::class);
 

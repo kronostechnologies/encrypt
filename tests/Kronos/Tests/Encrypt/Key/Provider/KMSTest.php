@@ -7,8 +7,9 @@ use Aws\Kms\KmsClient;
 use Kronos\Encrypt\Key\Exception\FetchException;
 use Kronos\Encrypt\Key\Provider\KMS;
 use Kronos\Encrypt\Key\KMS\KeyDescription;
+use PHPUnit\Framework\TestCase;
 
-class KMSTest extends \PHPUnit_Framework_TestCase {
+class KMSTest extends TestCase {
 	const CIPHERTEXT_BLOB = 'random binary string';
 	const DECRYPTED_KEY = 'Decrypted key';
 	const INVALID_BASE64 = '=InvalidBase64';
@@ -32,7 +33,7 @@ class KMSTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $provider;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->kms_client = $this->createPartialMock(KmsClient::class, ['decrypt']);
 
 		$this->key_description = $this->createMock(KeyDescription::class);

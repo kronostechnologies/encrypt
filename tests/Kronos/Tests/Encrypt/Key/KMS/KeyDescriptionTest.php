@@ -5,8 +5,9 @@ namespace Kronos\Tests\Encrypt\Key\KMS;
 
 use Kronos\Encrypt\Key\KMS\EncryptionContext;
 use Kronos\Encrypt\Key\KMS\KeyDescription;
+use PHPUnit\Framework\TestCase;
 
-class KeyDescriptionTest extends \PHPUnit_Framework_TestCase {
+class KeyDescriptionTest extends TestCase {
 	const VALUE = 'value';
 	const FIELD = 'field';
 
@@ -20,7 +21,7 @@ class KeyDescriptionTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $context;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->description = new KeyDescription('ciphertextBlob');
 
 		$this->context = $this->createMock(EncryptionContext::class);

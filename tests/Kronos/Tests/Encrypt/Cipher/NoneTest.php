@@ -3,8 +3,9 @@
 namespace Kronos\Tests\Encrypt\Cipher;
 
 use Kronos\Encrypt\Cipher\None;
+use PHPUnit\Framework\TestCase;
 
-class NoneTest extends \PHPUnit_Framework_TestCase {
+class NoneTest extends TestCase {
 
 	const PLAINTEXT = 'plaintext';
 	const CIPHERTEXT = 'ciphertext';
@@ -15,7 +16,7 @@ class NoneTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $cipher;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->cipher = new None();
 	}
 

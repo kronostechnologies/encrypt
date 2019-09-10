@@ -3,8 +3,9 @@
 namespace Kronos\Tests\Encrypt\Key\KMS;
 
 use Kronos\Encrypt\Key\KMS\EncryptionContext;
+use PHPUnit\Framework\TestCase;
 
-class EncryptionContextTest extends \PHPUnit_Framework_TestCase {
+class EncryptionContextTest extends TestCase {
 	const FIELD = 'field';
 	const EMTPY_FIELD = '';
 	const VALUE = 'value';
@@ -15,7 +16,7 @@ class EncryptionContextTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private $context;
 
-	public function setUp() {
+	public function setUp(): void {
 		$this->context = new EncryptionContext();
 	}
 

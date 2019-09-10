@@ -5,20 +5,20 @@ namespace Kronos\Encrypt;
 class Encrypt
 {
     /**
-     * @var Cipher\Adaptor
+     * @var Cipher\CipherAdaptor
      */
     private $cipher;
 
     /**
-     * @var Key\Provider\Adaptor
+     * @var Key\Provider\ProviderAdaptor
      */
     private $provider;
 
     /**
-     * @param Cipher\Adaptor $cipher
-     * @param Key\Provider\Adaptor $provider
+     * @param Cipher\CipherAdaptor $cipher
+     * @param Key\Provider\ProviderAdaptor $provider
      */
-    public function __construct(Cipher\Adaptor $cipher, Key\Provider\Adaptor $provider)
+    public function __construct(Cipher\CipherAdaptor $cipher, Key\Provider\ProviderAdaptor $provider)
     {
         $this->cipher = $cipher;
         $this->provider = $provider;
@@ -27,10 +27,10 @@ class Encrypt
     /**
      * Encrypt plaintext using given cypher and provided key
      *
-     * @param $plaintext
+     * @param string $plaintext
      * @return string
      */
-    public function encrypt($plaintext)
+    public function encrypt(string $plaintext): string
     {
         $key = $this->provider->getKey();
 
@@ -38,10 +38,10 @@ class Encrypt
     }
 
     /**
-     * @param $cyphertext
+     * @param string $cyphertext
      * @return string
      */
-    public function decrypt($cyphertext)
+    public function decrypt(string $cyphertext): string
     {
         $key = $this->provider->getKey();
 

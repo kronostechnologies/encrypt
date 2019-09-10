@@ -7,7 +7,7 @@ use Kronos\Encrypt\Key\Exception\GenerateException;
 
 class RandomBytes
 {
-    public function generateKey()
+    public function generateKey(): string
     {
         if (function_exists('random_bytes')) {
             return bin2hex(random_bytes(32));

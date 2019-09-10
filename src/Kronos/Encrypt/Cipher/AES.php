@@ -2,7 +2,7 @@
 
 namespace Kronos\Encrypt\Cipher;
 
-class AES implements Adaptor
+class AES implements CipherAdaptor
 {
 
     /**
@@ -24,14 +24,14 @@ class AES implements Adaptor
      * @param string $key
      * @return string Ciphertext
      */
-    public function encrypt($plaintext, $key)
+    public function encrypt(string $plaintext, string $key): string
     {
         $crypt_aes = $this->setupAES256($key);
 
         return $crypt_aes->encrypt($plaintext);
     }
 
-    public function decrypt($cyphertext, $key)
+    public function decrypt(string $cyphertext, string $key): string
     {
         $crypt_aes = $this->setupAES256($key);
 
@@ -42,7 +42,7 @@ class AES implements Adaptor
      * @param $key
      * @return \phpseclib\Crypt\AES
      */
-    private function setupAES256($key)
+    private function setupAES256(string $key): \phpseclib\Crypt\AES
     {
         $crypt_aes = $this->factory->createCryptAES();
         $crypt_aes->setKeyLength(256);

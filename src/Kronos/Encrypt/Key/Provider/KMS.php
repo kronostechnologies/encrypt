@@ -7,7 +7,7 @@ use Aws\Kms\KmsClient;
 use Kronos\Encrypt\Key\Exception\FetchException;
 use Kronos\Encrypt\Key\KMS\KeyDescription;
 
-class KMS implements Adaptor
+class KMS implements ProviderAdaptor
 {
 
     /**
@@ -37,7 +37,7 @@ class KMS implements Adaptor
      * @return string
      * @throws FetchException
      */
-    public function getKey()
+    public function getKey(): string
     {
         if (!$this->decrypted_key) {
 

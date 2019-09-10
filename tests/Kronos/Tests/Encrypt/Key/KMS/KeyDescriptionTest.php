@@ -5,6 +5,7 @@ namespace Kronos\Tests\Encrypt\Key\KMS;
 
 use Kronos\Encrypt\Key\KMS\EncryptionContext;
 use Kronos\Encrypt\Key\KMS\KeyDescription;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class KeyDescriptionTest extends TestCase
@@ -18,7 +19,7 @@ class KeyDescriptionTest extends TestCase
     private $description;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     private $context;
 
@@ -29,17 +30,18 @@ class KeyDescriptionTest extends TestCase
         $this->context = $this->createMock(EncryptionContext::class);
     }
 
-    public function test_EncryptionContext_getEncryptionContextAsArray_ShouldGetEncryptionContextArray()
+    public function test_EncryptionContext_getEncryptionContextAsArray_ShouldGetEncryptionContextArray(): void
     {
         $this->description->setEncryptionContext($this->context);
         $this->context
             ->expects(self::once())
-            ->method('toArray');
+            ->method('toArray')
+            ->willReturn([]);
 
         $this->description->getEncryptionContextAsArray();
     }
 
-    public function test_EncryptionContext_getEncryptionContextAsArray_ShouldReturnArray()
+    public function test_EncryptionContext_getEncryptionContextAsArray_ShouldReturnArray(): void
     {
         $expected_array = [self::FIELD => self::VALUE];
         $this->description->setEncryptionContext($this->context);
@@ -52,7 +54,7 @@ class KeyDescriptionTest extends TestCase
         $this->assertSame($expected_array, $actual_array);
     }
 
-    public function test_NoEncryptionContext_getEncryptionContextAsArray_ShouldReturnEmptyArray()
+    public function test_NoEncryptionContext_getEncryptionContextAsArray_ShouldReturnEmptyArray(): void
     {
         $actual_array = $this->description->getEncryptionContextAsArray();
 

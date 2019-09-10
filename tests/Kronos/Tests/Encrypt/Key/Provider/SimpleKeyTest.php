@@ -9,7 +9,7 @@ class SimpleKeyTest extends TestCase
 {
     const KEY = 'key';
 
-    public function test_getKey_ShouldReturnGivenKey()
+    public function test_getKey_ShouldReturnGivenKey(): void
     {
         $simple_key = new SimpleKey(self::KEY);
 

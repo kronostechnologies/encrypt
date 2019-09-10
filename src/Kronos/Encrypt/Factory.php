@@ -3,59 +3,68 @@
 namespace Kronos\Encrypt;
 
 use Aws\Kms\KmsClient;
+use Kronos\Encrypt\Cipher\CipherAdaptor;
+use Kronos\Encrypt\Cipher\AES;
+use Kronos\Encrypt\Cipher\None;
+use Kronos\Encrypt\Key\Generator\KMS as KmsKeyGenerator;
+use Kronos\Encrypt\Key\Generator\RandomBytes;
+use Kronos\Encrypt\Key\KMS\EncryptionContext;
+use Kronos\Encrypt\Key\KMS\KeyDescription;
+use Kronos\Encrypt\Key\Provider\KMS as KmsProvider;
+use Kronos\Encrypt\Key\Provider\SimpleKey;
 
 class Factory
 {
 
     /**
-     * @return Cipher\AES
+     * @return AES
      */
-    public function createAESCipher()
+    public function createAESCipher(): AES
     {
-        return new Cipher\AES();
+        return new AES();
     }
 
     /**
-     * @return Cipher\None
+     * @return None
      */
-    public function createPassthroughCipher()
+    public function createPassthroughCipher(): None
     {
-        return new Cipher\None();
+        return new None();
     }
 
     /**
-     * @return Key\Generator\RandomBytes
+     * @return RandomBytes
      */
-    public function createRandomBytesGenerator()
+    public function createRandomBytesGenerator(): RandomBytes
     {
-        return new Key\Generator\RandomBytes();
+        return new RandomBytes();
     }
 
     /**
      * @param string $key
      * @return Key\Provider\SimpleKey
      */
-    public function createSimpleKeyProvider($key)
+    public function createSimpleKeyProvider($key): SimpleKey
     {
-        return new Key\Provider\SimpleKey($key);
+        return new SimpleKey($key);
     }
 
     /**
      * @param KmsClient $kmsClient
      * @return Key\Generator\KMS
      */
-    public function createKMSKeyGenerator(KmsClient $kmsClient)
+    public function createKMSKeyGenerator(KmsClient $kmsClient): KmsKeyGenerator
     {
-        return new Key\Generator\KMS($kmsClient);
+        return new KmsKeyGenerator($kmsClient);
     }
 
     /**
      * @param KmsClient $kmsClient
      * @param string $ciphertextBlob
      * @param array $context
-     * @return Key\Provider\KMS
+     * @return KmsProvider
      */
-    public function createKMSProvider(KmsClient $kmsClient, $ciphertextBlob, $context = [])
+    public function createKMSProvider(KmsClient $kmsClient, string $ciphertextBlob, array $context = []): KmsProvider
     {
         $keyDescription = new Key\KMS\KeyDescription($ciphertextBlob);
         if (count($context)) {
@@ -65,32 +74,32 @@ class Factory
             }
             $keyDescription->setEncryptionContext($encryptionContext);
         }
-        return new Key\Provider\KMS($kmsClient, $keyDescription);
+        return new KmsProvider($kmsClient, $keyDescription);
     }
 
     /**
      * @param string $ciphertextBlob
-     * @return Key\KMS\KeyDescription
+     * @return KeyDescription
      */
-    public function createKMSKeyDescription($ciphertextBlob)
+    public function createKMSKeyDescription($ciphertextBlob): KeyDescription
     {
-        return new Key\KMS\KeyDescription($ciphertextBlob);
+        return new KeyDescription($ciphertextBlob);
     }
 
     /**
-     * @return Key\KMS\EncryptionContext
+     * @return EncryptionContext
      */
-    public function createKMSEncryptionContext()
+    public function createKMSEncryptionContext(): EncryptionContext
     {
-        return new Key\KMS\EncryptionContext();
+        return new EncryptionContext();
     }
 
     /**
-     * @param Cipher\Adaptor $cipher
-     * @param Key\Provider\Adaptor $provider
+     * @param Cipher\CipherAdaptor $cipher
+     * @param Key\Provider\ProviderAdaptor $provider
      * @return Encrypt
      */
-    public function createEncrypt(Cipher\Adaptor $cipher, Key\Provider\Adaptor $provider)
+    public function createEncrypt(CipherAdaptor $cipher, Key\Provider\ProviderAdaptor $provider)
     {
         return new Encrypt($cipher, $provider);
     }

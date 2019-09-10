@@ -2,7 +2,7 @@
 
 namespace Kronos\Encrypt\Key\Provider;
 
-class SimpleKey implements Adaptor
+class SimpleKey implements ProviderAdaptor
 {
 
     /**
@@ -14,13 +14,13 @@ class SimpleKey implements Adaptor
      * StringKey constructor.
      * @param string $key Key to hold and give back
      */
-    public function __construct($key)
+    public function __construct(string $key)
     {
         $this->key = $key;
     }
 
 
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }

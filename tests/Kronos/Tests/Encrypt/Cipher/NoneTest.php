@@ -22,7 +22,7 @@ class NoneTest extends TestCase
         $this->cipher = new None();
     }
 
-    public function test_encrypt_ShouldReturnPlainbtext()
+    public function test_encrypt_ShouldReturnPlainbtext(): void
     {
         $plaintext = self::PLAINTEXT;
 
@@ -31,7 +31,7 @@ class NoneTest extends TestCase
         $this->assertEquals($plaintext, $ciphertext);
     }
 
-    public function test_decrypt_ShouldReturnCiphertext()
+    public function test_decrypt_ShouldReturnCiphertext(): void
     {
         $ciphertext = self::CIPHERTEXT;
 

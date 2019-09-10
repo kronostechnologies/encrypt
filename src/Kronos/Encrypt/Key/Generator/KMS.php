@@ -25,7 +25,13 @@ class KMS
         $this->kms_client = $kms_client;
     }
 
-    public function generateKey($keyId, EncryptionContext $context = null)
+    /**
+     * @param string $keyId
+     * @param EncryptionContext|null $context
+     * @return KeyDescription
+     * @throws GenerateException
+     */
+    public function generateKey(string $keyId, EncryptionContext $context = null): KeyDescription
     {
 
         $options = [

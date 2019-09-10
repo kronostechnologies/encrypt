@@ -22,7 +22,7 @@ class EncryptionContextTest extends TestCase
         $this->context = new EncryptionContext();
     }
 
-    public function test_AddedContext_toArray_ShouldReturnArrayContainingAddedContext()
+    public function test_AddedContext_toArray_ShouldReturnArrayContainingAddedContext(): void
     {
         $this->context->addField(self::FIELD, self::VALUE);
 
@@ -31,7 +31,7 @@ class EncryptionContextTest extends TestCase
         $this->assertEquals([self::FIELD => self::VALUE], $array);
     }
 
-    public function test_AddedContextWithEmptyField_toArray_ShouldReturnArrayExcludingEmptyField()
+    public function test_AddedContextWithEmptyField_toArray_ShouldReturnArrayExcludingEmptyField(): void
     {
         $this->context->addField(self::FIELD, self::VALUE);
         $this->context->addField(self::EMTPY_FIELD, self::VALUE);
@@ -41,7 +41,7 @@ class EncryptionContextTest extends TestCase
         $this->assertEquals([self::FIELD => self::VALUE], $array);
     }
 
-    public function test_AddingTwiceTheSameField_toArray_ShouldReturnArrayWithLastGivenFieldValue()
+    public function test_AddingTwiceTheSameField_toArray_ShouldReturnArrayWithLastGivenFieldValue(): void
     {
         $this->context->addField(self::FIELD, self::VALUE);
         $this->context->addField(self::FIELD, self::ANOTHER_VALUE);

@@ -2,7 +2,7 @@
 
 namespace Kronos\Encrypt\Key\Provider;
 
-interface Adaptor
+interface ProviderAdaptor
 {
 
     /**
@@ -10,5 +10,5 @@ interface Adaptor
      *
      * @return string
      */
-    public function getKey();
+    public function getKey(): string;
 }

@@ -21,7 +21,7 @@ class KeyDescription
      * KeyDescription constructor.
      * @param string $ciphertextBlob
      */
-    public function __construct($ciphertextBlob)
+    public function __construct(string $ciphertextBlob)
     {
         $this->ciphertextBlob = $ciphertextBlob;
     }
@@ -29,7 +29,7 @@ class KeyDescription
     /**
      * @return string
      */
-    public function getCiphertextBlob()
+    public function getCiphertextBlob(): string
     {
         return $this->ciphertextBlob;
     }
@@ -45,7 +45,7 @@ class KeyDescription
     /**
      * @return EncryptionContext
      */
-    public function getEncryptionContext()
+    public function getEncryptionContext(): EncryptionContext
     {
         return $this->context;
     }
@@ -54,7 +54,7 @@ class KeyDescription
      * Return encryption context as an array
      * @return array
      */
-    public function getEncryptionContextAsArray()
+    public function getEncryptionContextAsArray(): array
     {
         if ($this->context) {
             return $this->context->toArray();

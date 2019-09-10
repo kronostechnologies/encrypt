@@ -11,7 +11,7 @@ class EncryptionContext
      * @param $field string Name of the field to add
      * @param $value string Value of the field to add
      */
-    public function addField($field, $value)
+    public function addField(string $field, string $value): void
     {
         if ($field) {
             $this->context[$field] = $value;

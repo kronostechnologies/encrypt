@@ -3,8 +3,9 @@
 namespace Kronos\Tests\Encrypt;
 
 use Kronos\Encrypt\Encrypt;
-use Kronos\Encrypt\Cipher\Adaptor as Cipher;
-use Kronos\Encrypt\Key\Provider\Adaptor as KeyProvider;
+use Kronos\Encrypt\Cipher\CipherAdaptor as Cipher;
+use Kronos\Encrypt\Key\Provider\ProviderAdaptor as KeyProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class EncryptTest extends TestCase
@@ -19,12 +20,12 @@ class EncryptTest extends TestCase
     private $encrypt;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     private $provider;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     private $cipher;
 
@@ -38,7 +39,7 @@ class EncryptTest extends TestCase
 
     // encrypt
 
-    public function test_encrypt_ShouldGetCipherKey()
+    public function test_encrypt_ShouldGetCipherKey(): void
     {
         $this->provider
             ->expects(self::once())
@@ -47,7 +48,7 @@ class EncryptTest extends TestCase
         $this->encrypt->encrypt(self::PLAINTEXT);
     }
 
-    public function test_Key_encrypt_ShouldEncryptPlaintextWithKey()
+    public function test_Key_encrypt_ShouldEncryptPlaintextWithKey(): void
     {
         $this->givenKey();
         $this->cipher
@@ -58,7 +59,7 @@ class EncryptTest extends TestCase
         $this->encrypt->encrypt(self::PLAINTEXT);
     }
 
-    public function test_EncryptedPlaintext_encrypt_ShouldReturnCiphertext()
+    public function test_EncryptedPlaintext_encrypt_ShouldReturnCiphertext(): void
     {
         $this->givenKey();
         $this->givenCipherEncryptedPlaintext();
@@ -70,7 +71,7 @@ class EncryptTest extends TestCase
 
     // decrypt
 
-    public function test_decrypt_ShouldGetCipherKey()
+    public function test_decrypt_ShouldGetCipherKey(): void
     {
         $this->provider
             ->expects(self::once())
@@ -79,7 +80,7 @@ class EncryptTest extends TestCase
         $this->encrypt->decrypt(self::PLAINTEXT);
     }
 
-    public function test_Key_decrypt_ShouldDecryptCipherWithKey()
+    public function test_Key_decrypt_ShouldDecryptCipherWithKey(): void
     {
         $this->givenKey();
         $this->cipher
@@ -90,7 +91,7 @@ class EncryptTest extends TestCase
         $this->encrypt->decrypt(self::CYPHERTEXT);
     }
 
-    public function test_DecryptedCiphertext_decrypt_ShouldReturnPlaintext()
+    public function test_DecryptedCiphertext_decrypt_ShouldReturnPlaintext(): void
     {
         $this->givenKey();
         $this->givenCipherDecryptedCiphertext();
@@ -102,21 +103,21 @@ class EncryptTest extends TestCase
 
     // utility functions
 
-    private function givenKey()
+    private function givenKey(): void
     {
         $this->provider
             ->method('getKey')
             ->willReturn(self::KEY);
     }
 
-    private function givenCipherEncryptedPlaintext()
+    private function givenCipherEncryptedPlaintext(): void
     {
         $this->cipher
             ->method('encrypt')
             ->willReturn(self::CYPHERTEXT);
     }
 
-    private function givenCipherDecryptedCiphertext()
+    private function givenCipherDecryptedCiphertext(): void
     {
         $this->cipher
             ->method('decrypt')

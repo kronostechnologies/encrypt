@@ -2,14 +2,24 @@
 
 namespace Kronos\Encrypt\Cipher;
 
-class None implements Adaptor
+class None implements CipherAdaptor
 {
-    public function encrypt($plaintext, $key)
+    /**
+     * @param string $plaintext
+     * @param string $key
+     * @return string
+     */
+    public function encrypt(string $plaintext, string $key): string
     {
         return $plaintext;
     }
 
-    public function decrypt($cyphertext, $key)
+    /**
+     * @param string $cyphertext
+     * @param string $key
+     * @return string
+     */
+    public function decrypt(string $cyphertext, string $key): string
     {
         return $cyphertext;
     }

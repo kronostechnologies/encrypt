@@ -7,6 +7,7 @@ use Kronos\Encrypt\Key\Generator\KMS;
 use Aws\Kms\KmsClient;
 use Kronos\Encrypt\Key\KMS\EncryptionContext;
 use Kronos\Encrypt\Key\KMS\KeyDescription;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class KMSTest extends TestCase
@@ -24,7 +25,7 @@ class KMSTest extends TestCase
     private $generator;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     private $kms_client;
 
@@ -35,7 +36,7 @@ class KMSTest extends TestCase
         $this->generator = new KMS($this->kms_client);
     }
 
-    public function test_generateKey_ShouldGenerateDataKey()
+    public function test_generateKey_ShouldGenerateDataKey(): void
     {
         $this->kms_client
             ->expects(self::once())
@@ -48,7 +49,7 @@ class KMSTest extends TestCase
         $this->generator->generateKey(self::KEY_ID);
     }
 
-    public function test_generateKey_ShouldReturnKeyDescription()
+    public function test_generateKey_ShouldReturnKeyDescription(): void
     {
         $this->givenCiphertextBlob();
 
@@ -58,7 +59,7 @@ class KMSTest extends TestCase
         $this->assertEquals(base64_encode(self::CIPHERTEXT_BLOB), $key->getCiphertextBlob());
     }
 
-    public function test_EncryptionContext_generateKey_ShouldGetAsArray()
+    public function test_EncryptionContext_generateKey_ShouldGetAsArray(): void
     {
         $context = $this->createMock(EncryptionContext::class);
         $context
@@ -68,7 +69,7 @@ class KMSTest extends TestCase
         $this->generator->generateKey(self::KEY_ID, $context);
     }
 
-    public function test_EncryptionContext_generateKey_ShouldGenerateKeyWithContextArray()
+    public function test_EncryptionContext_generateKey_ShouldGenerateKeyWithContextArray(): void
     {
         $context = $this->givenExcyptionContext();
         $this->kms_client
@@ -83,7 +84,7 @@ class KMSTest extends TestCase
         $this->generator->generateKey(self::KEY_ID, $context);
     }
 
-    public function test_EncryptionContext_generateKey_ShouldReturnKeyWithContext()
+    public function test_EncryptionContext_generateKey_ShouldReturnKeyWithContext(): void
     {
         $context = $this->givenExcyptionContext();
         $this->givenCiphertextBlob();
@@ -94,7 +95,7 @@ class KMSTest extends TestCase
         $this->assertSame($context, $key->getEncryptionContext());
     }
 
-    public function test_EmptyEncryptionContextArray_generateKey_ShouldGenerateKeyWithoutEncryptionContext()
+    public function test_EmptyEncryptionContextArray_generateKey_ShouldGenerateKeyWithoutEncryptionContext(): void
     {
         $context = $this->givenEmptyEncryptionContextArray();
         $this->kms_client
@@ -108,7 +109,7 @@ class KMSTest extends TestCase
         $this->generator->generateKey(self::KEY_ID, $context);
     }
 
-    public function test_KmsClientException_generateKey_ShouldThrowException()
+    public function test_KmsClientException_generateKey_ShouldThrowException(): void
     {
         $this->kms_client
             ->method('generateDataKeyWithoutPlaintext')
@@ -118,7 +119,7 @@ class KMSTest extends TestCase
         $this->generator->generateKey(self::KEY_ID);
     }
 
-    private function givenCiphertextBlob()
+    private function givenCiphertextBlob(): void
     {
         $this->kms_client
             ->method('generateDataKeyWithoutPlaintext')
@@ -128,9 +129,9 @@ class KMSTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
-    private function givenExcyptionContext()
+    private function givenExcyptionContext(): MockObject
     {
         $context = $this->createMock(EncryptionContext::class);
         $context
@@ -140,9 +141,9 @@ class KMSTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
-    private function givenEmptyEncryptionContextArray()
+    private function givenEmptyEncryptionContextArray(): MockObject
     {
         $context = $this->createMock(EncryptionContext::class);
         $context

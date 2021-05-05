@@ -38,6 +38,8 @@ class KMSTest extends TestCase
 
     public function test_generateKey_ShouldGenerateDataKey(): void
     {
+        $this->givenCiphertextBlob();
+
         $this->kms_client
             ->expects(self::once())
             ->method('generateDataKeyWithoutPlaintext')
@@ -61,6 +63,7 @@ class KMSTest extends TestCase
 
     public function test_EncryptionContext_generateKey_ShouldGetAsArray(): void
     {
+        $this->givenCiphertextBlob();
         $context = $this->createMock(EncryptionContext::class);
         $context
             ->expects(self::once())
@@ -71,6 +74,7 @@ class KMSTest extends TestCase
 
     public function test_EncryptionContext_generateKey_ShouldGenerateKeyWithContextArray(): void
     {
+        $this->givenCiphertextBlob();
         $context = $this->givenExcyptionContext();
         $this->kms_client
             ->expects(self::once())
@@ -97,6 +101,7 @@ class KMSTest extends TestCase
 
     public function test_EmptyEncryptionContextArray_generateKey_ShouldGenerateKeyWithoutEncryptionContext(): void
     {
+        $this->givenCiphertextBlob();
         $context = $this->givenEmptyEncryptionContextArray();
         $this->kms_client
             ->expects(self::once())

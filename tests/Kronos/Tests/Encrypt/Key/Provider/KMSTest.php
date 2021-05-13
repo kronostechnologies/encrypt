@@ -37,7 +37,10 @@ class KMSTest extends TestCase
 
     public function setUp(): void
     {
-        $this->kms_client = $this->createPartialMock(KmsClient::class, ['decrypt']);
+        $this->kms_client = $this->getMockBuilder(KmsClient::class)
+            ->disableOriginalConstructor()
+            ->addMethods(['decrypt'])
+            ->getMock();
 
         $this->key_description = $this->createMock(KeyDescription::class);
 

@@ -25,13 +25,16 @@ class KMSTest extends TestCase
     private $generator;
 
     /**
-     * @var MockObject
+     * @var KmsClient & MockObject
      */
     private $kms_client;
 
     public function setUp(): void
     {
-        $this->kms_client = $this->createPartialMock(KmsClient::class, ['generateDataKeyWithoutPlaintext']);
+        $this->kms_client = $this->getMockBuilder(KmsClient::class)
+            ->disableOriginalConstructor()
+            ->addMethods(['generateDataKeyWithoutPlaintext'])
+            ->getMock();
 
         $this->generator = new KMS($this->kms_client);
     }

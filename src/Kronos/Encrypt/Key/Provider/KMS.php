@@ -9,7 +9,6 @@ use Kronos\Encrypt\Key\KMS\KeyDescription;
 
 class KMS implements ProviderAdaptor
 {
-
     /**
      * @var KmsClient
      */
@@ -20,7 +19,7 @@ class KMS implements ProviderAdaptor
      */
     private $key_description;
 
-    private $decrypted_key = null;
+    private string $decrypted_key = '';
 
     /**
      * @param KmsClient $client
@@ -34,12 +33,11 @@ class KMS implements ProviderAdaptor
 
     /**
      * Return KMS decrypted key
-     * @return string
      * @throws FetchException
      */
     public function getKey(): string
     {
-        if (!$this->decrypted_key) {
+        if (empty($this->decrypted_key)) {
 
             $decoded_ciphertextblob = base64_decode($this->key_description->getCiphertextBlob(), true);
             if (!$decoded_ciphertextblob) {
@@ -61,7 +59,8 @@ class KMS implements ProviderAdaptor
                 throw new FetchException('Key decryption failed', 0, $e);
             }
 
-            $this->decrypted_key = $response['Plaintext'];
+            $decryptedKey = is_string($response['Plaintext']) ? $response['Plaintext'] : '';
+            $this->decrypted_key = $decryptedKey;
         }
 
         return $this->decrypted_key;

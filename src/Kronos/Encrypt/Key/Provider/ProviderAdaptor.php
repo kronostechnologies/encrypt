@@ -7,8 +7,6 @@ interface ProviderAdaptor
 
     /**
      * Return encryption/decryption key
-     *
-     * @return string
      */
     public function getKey(): string;
 }

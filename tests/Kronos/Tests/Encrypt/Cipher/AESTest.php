@@ -6,6 +6,7 @@ use Kronos\Encrypt\Cipher\AES;
 use Kronos\Encrypt\Cipher\Factory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use phpseclib\Crypt\AES as PHPSecAES;
 
 class AESTest extends TestCase
 {
@@ -30,7 +31,7 @@ class AESTest extends TestCase
 
     public function setUp(): void
     {
-        $this->crypt_aes = $this->createMock(\phpseclib\Crypt\AES::class);
+        $this->crypt_aes = $this->createMock(PHPSecAES::class);
         $this->factory = $this->createMock(Factory::class);
         $this->factory
             ->method('createCryptAES')

@@ -2,15 +2,13 @@
 
 namespace Kronos\Encrypt\Cipher;
 
+use phpseclib\Crypt\AES as PHPSecAES;
+
 class AES implements CipherAdaptor
 {
+    private Factory $factory;
 
-    /**
-     * @var Factory
-     */
-    private $factory;
-
-    public function __construct($factory = null)
+    public function __construct(Factory $factory = null)
     {
         $this->factory = ($factory ?: new Factory());
     }
@@ -28,6 +26,7 @@ class AES implements CipherAdaptor
     {
         $crypt_aes = $this->setupAES256($key);
 
+        /** @psalm-suppress InternalMethod */
         return $crypt_aes->encrypt($plaintext);
     }
 
@@ -35,14 +34,11 @@ class AES implements CipherAdaptor
     {
         $crypt_aes = $this->setupAES256($key);
 
+        /** @psalm-suppress InternalMethod */
         return $crypt_aes->decrypt($cyphertext);
     }
 
-    /**
-     * @param $key
-     * @return \phpseclib\Crypt\AES
-     */
-    private function setupAES256(string $key): \phpseclib\Crypt\AES
+    private function setupAES256(string $key): PHPSecAES
     {
         $crypt_aes = $this->factory->createCryptAES();
         $crypt_aes->setKeyLength(256);

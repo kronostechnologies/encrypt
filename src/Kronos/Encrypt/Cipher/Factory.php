@@ -2,15 +2,12 @@
 
 namespace Kronos\Encrypt\Cipher;
 
+use phpseclib\Crypt\AES;
+
 class Factory
 {
-
-    /**
-     * @param int $mode AES mode, default CBC
-     * @return \phpseclib\Crypt\AES
-     */
-    public function createCryptAES($mode = \phpseclib\Crypt\AES::MODE_CBC): \phpseclib\Crypt\AES
+    public function createCryptAES(int $mode = AES::MODE_CBC): AES
     {
-        return new \phpseclib\Crypt\AES($mode);
+        return new AES($mode);
     }
 }

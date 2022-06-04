@@ -10,17 +10,21 @@
 	"config": {
 		"platform": {
 			"php": "7.4"
+		},
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": false
 		}
 	},
 	"require": {
-		"php": "~7.4",
-		"aws/aws-sdk-php": "^3.24",
-		"phpseclib/phpseclib": "~2.0.3"
+        "php": "^7.4 || ^8.1",
+		"aws/aws-sdk-php": "3.224.3",
+		"phpseclib/phpseclib": "2.0.37"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^8.5",
+		"phpunit/phpunit": "9.5.20",
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
-		"phpcompatibility/php-compatibility": "^9.3"
+		"phpcompatibility/php-compatibility": "^9.3",
+		"vimeo/psalm": "4.23.0"
 	},
 	"license": "MIT"
 }

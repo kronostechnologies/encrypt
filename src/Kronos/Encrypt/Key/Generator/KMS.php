@@ -18,7 +18,6 @@ class KMS
 
     /**
      * KMS key generator constructor.
-     * @param KmsClient $kms_client
      */
     public function __construct(KmsClient $kms_client)
     {
@@ -52,7 +51,8 @@ class KMS
             throw new GenerateException('Could not generate KMS key', 0, $e);
         }
 
-        $key = new KeyDescription(base64_encode($response['CiphertextBlob']));
+        $cipherTextBlob = $response['CiphertextBlob'] ?: '';
+        $key = new KeyDescription(base64_encode($cipherTextBlob));
         if ($context) {
             $key->setEncryptionContext($context);
         }
